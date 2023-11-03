@@ -6,7 +6,7 @@ app = FastAPI()
 
 class Task(BaseModel):
     id: int
-    name: str
+    name: str | None = None
     completed: bool
 
 
