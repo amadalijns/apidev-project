@@ -71,22 +71,26 @@ def delete_task(task_id):
     conn.close()
 
 
+# Maak de tabel bij het opstarten van de applicatie
 @app.on_event("startup")
 async def startup_event():
     create_table()
 
 
+# Voeg een nieuwe taak toe aan de database via een POST-verzoek
 @app.post('/tasks/', response_model=Task)
 def create_task(task: Task):
     task_id = add_task(task.content, task.completed)
     return {"id": task_id, "content": task.content, "completed": task.completed}
 
 
+# Haal alle taken op uit de database via een GET-verzoek
 @app.get('/tasks/', response_model=List[Task])
 def read_tasks():
     return get_tasks()
 
 
+# Haal een specifieke taak op uit de database op basis van de ID via een GET-verzoek
 @app.get('/tasks/{task_id}', response_model=Task)
 def read_task(task_id: int):
     task = get_task(task_id)
@@ -95,6 +99,7 @@ def read_task(task_id: int):
     return {"id": task[0], "content": task[1], "completed": task[2]}
 
 
+# Verwijder een taak uit de database op basis van de ID via een DELETE-verzoek
 @app.delete('/tasks/{task_id}', response_model=dict)
 def delete_task_endpoint(task_id: int):
     task = get_task(task_id)
