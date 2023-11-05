@@ -1,30 +1,40 @@
-from fastapi import FastAPI
-from pydantic import BaseModel
+from fastapi import Depends, FastAPI, HTTPException
+from sqlalchemy.orm import Session
+
+import crud
+import models
+import schemas
+from database import SessionLocal, engine
+import os
 
 app = FastAPI()
 
-
-class Task(BaseModel):
-    id: int
-    name: str | None = None
-    completed: bool
+models.Base.metadata.create_all(bind=engine)
 
 
-tasks = [
-    Task(id=1, name="Taak1", completed=False),
-    Task(id=2, name="Taak2", completed=True),
-    Task(id=3, name="Taak3", completed=False)
-]  # Lijst met taken
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
 
 
-@app.get("/tasks", response_model=list[Task])
-async def read_tasks():
-    return tasks
+@app.post("/tasks/", response_model=schemas.Task)
+def create_task(task: schemas.TaskCreate, db: Session = Depends(get_db)):
+    return crud.create_task(db=db, id=task.id, name=task.name, completed=task.completed)
 
 
-@app.get("/tasks/{task_id}", response_model=Task)
-async def read_task(task_id: int):
-    for task in tasks:
-        if task.id == task_id:
-            return task
-    return None
+@app.get("/tasks/", response_model=list[schemas.Task])
+def read_tasks(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    return crud.get_tasks(db, skip=skip, limit=limit)
+
+
+@app.get("/tasks/{task_id}", response_model=schemas.Task)
+def read_task(task_id: int, db: Session = Depends(get_db)):
+    return crud.get_task_by_id(db, task_id=task_id)
+
+
+@app.delete("/tasks/{task_id}")
+def delete_task(task_id: int, db: Session = Depends(get_db)):
+    return crud.delete_task_by_id(db, task_id=task_id)
