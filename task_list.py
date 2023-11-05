@@ -22,7 +22,10 @@ def get_db():
 
 @app.post("/tasks/", response_model=schemas.Task)
 def create_task(task: schemas.TaskCreate, db: Session = Depends(get_db)):
-    return crud.create_task(db=db, id=task.id, name=task.name, completed=task.completed)
+    db_task = crud.get_task_by_id(db, task_id=task.id)
+    if db_task:
+        raise HTTPException(status_code=400, detail="Task with this ID already exists")
+    return crud.create_task(db=db, task=task)
 
 
 @app.get("/tasks/", response_model=list[schemas.Task])
