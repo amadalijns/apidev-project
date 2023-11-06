@@ -14,6 +14,7 @@ hier komt de link
 ### Aantoonbare werking
 
 Nieuwe taak aanmaken:
+<br>
 ![alt tekst](images/createTask.png)
 
 Alle taken tonen:
