@@ -13,7 +13,7 @@ def get_task_by_id(db: Session, task_id: int):
 
 
 def create_task(db: Session, task: schemas.Task):
-    db_task = models.Task(name=task.name, completed=task.completed)
+    db_task = models.Task(**task.model_dump())
     db.add(db_task)
     db.commit()
     db.refresh(db_task)
