@@ -40,6 +40,14 @@ def read_task(task_id: int, db: Session = Depends(get_db)):
     return crud.get_task_by_id(db, task_id=task_id)
 
 
+@app.put("/tasks/{task_id}")
+def update_task_status(task_id: int, completed: bool, db: Session = Depends(get_db)):
+    db_task = crud.update_task_status(db, task_id, completed)
+    if db_task is None:
+        raise HTTPException(status_code=404, detail="Task not found")
+    return db_task
+
+
 @app.delete("/tasks/{task_id}")
 def delete_task(task_id: int, db: Session = Depends(get_db)):
     return crud.delete_task_by_id(db, task_id=task_id)

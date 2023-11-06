@@ -24,6 +24,16 @@ def create_task(db: Session, task: schemas.Task):
     return db_task
 
 
+def update_task_status(db: Session, task_id: int, completed: bool):
+    db_task = db.query(models.Task).filter(models.Task.id == task_id).first()
+    if db_task:
+        db_task.completed = completed
+        db.commit()
+        db.refresh(db_task)
+        return db_task
+    return None
+
+
 def delete_task_by_id(db: Session, task_id: int):
     task = db.query(models.Task).filter(models.Task.id == task_id).first()
     if task:
