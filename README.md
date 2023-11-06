@@ -12,4 +12,21 @@ Met behulp van Pydantic-modellen zorgt de API voor de juiste validatie van gegev
 hier komt de link
 
 ### Aantoonbare werking
+
+Nieuwe taak aanmaken:
 ![alt tekst](images/createTask.png)
+
+Alle taken tonen:
+![alt tekst](images/readTasks.png)
+
+Een specifieke taak tonen:
+![alt tekst](images/readTask.png)
+
+Een specifieke taak updaten:
+![alt tekst](images/updateTask.png)
+
+Een specifieke taak verwijderen:
+![alt tekst](images/deleteTask.png)
+
+Alle taken verwijderen:
+![alt tekst](images/deleteTasks.png)
