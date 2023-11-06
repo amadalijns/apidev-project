@@ -13,21 +13,20 @@ hier komt de link
 
 ### Aantoonbare werking
 
-Nieuwe taak aanmaken:
-<br>
+Nieuwe taak aanmaken:<br>
 ![alt tekst](images/createTask.png)
 
-Alle taken tonen:
+Alle taken tonen:<br>
 ![alt tekst](images/readTasks.png)
 
-Een specifieke taak tonen:
+Een specifieke taak tonen:<br>
 ![alt tekst](images/readTask.png)
 
-Een specifieke taak updaten:
+Een specifieke taak updaten:<br>
 ![alt tekst](images/updateTask.png)
 
 Een specifieke taak verwijderen:
 ![alt tekst](images/deleteTask.png)
 
-Alle taken verwijderen:
+Alle taken verwijderen:<br>
 ![alt tekst](images/deleteTasks.png)
