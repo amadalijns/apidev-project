@@ -37,6 +37,6 @@ Alle taken verwijderen:<br>
 ![alt tekst](images/docs/get1.png)
 ![alt tekst](images/docs/get2.png)
 ![alt tekst](images/docs/put.png)
-![alt tekst](images/docs/delete1.png)
 ![alt tekst](images/docs/delete2.png)
+![alt tekst](images/docs/delete1.png)
 ![alt tekst](images/docs/schemas.png)
