@@ -12,6 +12,10 @@ def get_task_by_id(db: Session, task_id: int):
     return db.query(models.Task).filter(models.Task.id == task_id).first()
 
 
+def get_task_by_name(db: Session, name: str):
+    return db.query(models.Task).filter(models.Task.name == name).first()
+
+
 def create_task(db: Session, task: schemas.Task):
     db_task = models.Task(**task.model_dump())
     db.add(db_task)
@@ -27,3 +31,9 @@ def delete_task_by_id(db: Session, task_id: int):
         db.commit()
         return {"message": f"Task with id {task_id} has been deleted"}
     return {"message": f"Task with id {task_id} not found"}
+
+
+def delete_all_tasks(db: Session):
+    db.query(models.Task).delete()
+    db.commit()
+    return {"message": "All tasks have been deleted"}

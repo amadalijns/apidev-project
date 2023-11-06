@@ -22,6 +22,11 @@ def get_db():
 
 @app.post("/tasks", response_model=schemas.Task)
 def create_task(task: schemas.TaskCreate, db: Session = Depends(get_db)):
+    db_task = crud.get_task_by_name(db, name=task.name)  # Controleren of taak al bestaat op basis van de naam
+
+    if db_task:
+        raise HTTPException(status_code=400, detail="Task with this name already exists")
+
     return crud.create_task(db, task)
 
 
@@ -38,3 +43,8 @@ def read_task(task_id: int, db: Session = Depends(get_db)):
 @app.delete("/tasks/{task_id}")
 def delete_task(task_id: int, db: Session = Depends(get_db)):
     return crud.delete_task_by_id(db, task_id=task_id)
+
+
+@app.delete("/tasks")
+def delete_tasks(db: Session = Depends(get_db)):
+    return crud.delete_all_tasks(db)
