@@ -41,7 +41,10 @@ def read_tasks(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
 # Endpoint om een specifieke taak op te halen op basis van ID
 @app.get("/tasks/{task_id}", response_model=schemas.Task)
 def read_task(task_id: int, db: Session = Depends(get_db)):
-    return crud.get_task_by_id(db, task_id=task_id)
+    task = crud.get_task_by_id(db, task_id=task_id)
+    if task is None:
+        raise HTTPException(status_code=404, detail=f"Taak {task_id} is niet gevonden!")
+    return task
 
 
 # Endpoint om de status van een taak bij te werken
@@ -49,7 +52,7 @@ def read_task(task_id: int, db: Session = Depends(get_db)):
 def update_task_status(task_id: int, completed: bool, db: Session = Depends(get_db)):
     db_task = crud.update_task_status(db, task_id, completed)
     if db_task is None:
-        raise HTTPException(status_code=404, detail="Task not found")
+        raise HTTPException(status_code=404, detail=f"Taak {task_id} is niet gevonden!")
     return db_task
 
 
