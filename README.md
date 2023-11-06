@@ -25,7 +25,7 @@ Een specifieke taak tonen:<br>
 Een specifieke taak updaten:<br>
 ![alt tekst](images/updateTask.png)
 
-Een specifieke taak verwijderen:
+Een specifieke taak verwijderen:<br>
 ![alt tekst](images/deleteTask.png)
 
 Alle taken verwijderen:<br>
