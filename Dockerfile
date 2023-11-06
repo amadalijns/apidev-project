@@ -1,5 +1,6 @@
 FROM python:3.10.0-alpine
 WORKDIR /code
+EXPOSE 8000
 COPY . /code
 RUN pip install --no-cache-dir --upgrade -r requirements.txt
 RUN pip install uvicorn
