@@ -12,3 +12,4 @@ Met behulp van Pydantic-modellen zorgt de API voor de juiste validatie van gegev
 hier komt de link
 
 ### Aantoonbare werking
+![alt tekst](images/createTask.png)
