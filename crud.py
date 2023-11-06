@@ -12,7 +12,7 @@ def get_task_by_id(db: Session, task_id: int):
     return db.query(models.Task).filter(models.Task.id == task_id).first()
 
 
-def create_task(db: Session, task: schemas.TaskCreate):
+def create_task(db: Session, task: schemas.Task):
     db_task = models.Task(name=task.name, completed=task.completed)
     db.add(db_task)
     db.commit()

@@ -2,7 +2,6 @@ from pydantic import BaseModel
 
 
 class TaskBase(BaseModel):
-    id: int
     name: str | None = None
     completed: bool
 
