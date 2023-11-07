@@ -21,7 +21,7 @@ def get_task_by_name(db: Session, name: str):
 
 # Functie om een nieuwe taak te maken en op te slaan in de database
 def create_task(db: Session, task: schemas.Task):
-    db_task = models.Task(**task.model_dump())
+    db_task = models.Task(**task.dict())
     db.add(db_task)
     db.commit()
     db.refresh(db_task)
