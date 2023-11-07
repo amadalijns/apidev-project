@@ -5,4 +5,4 @@ COPY ./requirements.txt /code/requirements.txt
 RUN pip install --no-cache-dir --upgrade -r requirements.txt
 COPY . /code
 RUN mkdir -p /code/sqlitedb
-CMD ["uvicorn", "task_list.main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "task_list:app", "--host", "0.0.0.0", "--port", "8000"]
