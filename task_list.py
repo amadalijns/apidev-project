@@ -25,10 +25,8 @@ def get_db():
         db.close()
 
 
-# Endpoint om een nieuwe taak te maken
-@app.post("/tasks", response_model=schemas.Task)
-def create_task(task: schemas.TaskCreate, db: Session = Depends(get_db), credentials: HTTPBasicCredentials = Depends(security)):
-
+# Functie om te authentiseren
+def authenticate(credentials: HTTPBasicCredentials = Depends(security)):
     # Authenticatie toevoegen
     current_username_bytes = credentials.username.encode("utf8")
     correct_username_bytes = b"admin"
@@ -46,6 +44,14 @@ def create_task(task: schemas.TaskCreate, db: Session = Depends(get_db), credent
             detail="Incorrect username or password",
             headers={"WWW-Authenticate": "Basic"},
         )
+
+
+# Endpoint om een nieuwe taak te maken
+@app.post("/tasks", response_model=schemas.Task)
+def create_task(task: schemas.TaskCreate, db: Session = Depends(get_db), credentials: HTTPBasicCredentials = Depends(security)):
+
+    # Authenticatie
+    authenticate(credentials)
 
     # Controleren of taak al bestaat op basis van de naam
     db_task = crud.get_task_by_name(db, name=task.name)
@@ -73,23 +79,9 @@ def read_task(task_id: int, db: Session = Depends(get_db)):
 @app.put("/tasks/{task_id}")
 def update_task_status(task_id: int, completed: bool, db: Session = Depends(get_db), credentials: HTTPBasicCredentials = Depends(security)):
 
-    # Authenticatie toevoegen
-    current_username_bytes = credentials.username.encode("utf8")
-    correct_username_bytes = b"admin"
-    is_correct_username = secrets.compare_digest(
-        current_username_bytes, correct_username_bytes
-    )
-    current_password_bytes = credentials.password.encode("utf8")
-    correct_password_bytes = b"zwaardvis"
-    is_correct_password = secrets.compare_digest(
-        current_password_bytes, correct_password_bytes
-    )
-    if not (is_correct_username and is_correct_password):
-        raise HTTPException(
-            status_code=401,
-            detail="Incorrect username or password",
-            headers={"WWW-Authenticate": "Basic"},
-        )
+    # Authenticatie
+    authenticate(credentials)
+
     db_task = crud.update_task_status(db, task_id, completed)
     if db_task is None:
         raise HTTPException(status_code=404, detail=f"Taak {task_id} is niet gevonden!")
@@ -100,23 +92,9 @@ def update_task_status(task_id: int, completed: bool, db: Session = Depends(get_
 @app.delete("/tasks/{task_id}")
 def delete_task(task_id: int, db: Session = Depends(get_db), credentials: HTTPBasicCredentials = Depends(security)):
 
-    # Authenticatie toevoegen
-    current_username_bytes = credentials.username.encode("utf8")
-    correct_username_bytes = b"admin"
-    is_correct_username = secrets.compare_digest(
-        current_username_bytes, correct_username_bytes
-    )
-    current_password_bytes = credentials.password.encode("utf8")
-    correct_password_bytes = b"zwaardvis"
-    is_correct_password = secrets.compare_digest(
-        current_password_bytes, correct_password_bytes
-    )
-    if not (is_correct_username and is_correct_password):
-        raise HTTPException(
-            status_code=401,
-            detail="Incorrect username or password",
-            headers={"WWW-Authenticate": "Basic"},
-        )
+    # Authenticatie
+    authenticate(credentials)
+
     return crud.delete_task_by_id(db, task_id=task_id)
 
 
@@ -124,21 +102,7 @@ def delete_task(task_id: int, db: Session = Depends(get_db), credentials: HTTPBa
 @app.delete("/tasks")
 def delete_tasks(db: Session = Depends(get_db), credentials: HTTPBasicCredentials = Depends(security)):
 
-    # Authenticatie toevoegen
-    current_username_bytes = credentials.username.encode("utf8")
-    correct_username_bytes = b"admin"
-    is_correct_username = secrets.compare_digest(
-        current_username_bytes, correct_username_bytes
-    )
-    current_password_bytes = credentials.password.encode("utf8")
-    correct_password_bytes = b"zwaardvis"
-    is_correct_password = secrets.compare_digest(
-        current_password_bytes, correct_password_bytes
-    )
-    if not (is_correct_username and is_correct_password):
-        raise HTTPException(
-            status_code=401,
-            detail="Incorrect username or password",
-            headers={"WWW-Authenticate": "Basic"},
-        )
+    # Authenticatie
+    authenticate(credentials)
+
     return crud.delete_all_tasks(db)
