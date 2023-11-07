@@ -9,7 +9,7 @@ Deze API biedt een interface voor het beheren van een takenlijst. Met de API kun
 Met behulp van Pydantic-modellen zorgt de API voor de juiste validatie van gegevens. Bovendien maakt de integratie van een SQLite-database het mogelijk om de takenlijst persistent op te slaan en te beheren. De API maakt gebruik van de REST-architectuurstijl, waardoor gebruikers gemakkelijk toegang hebben tot de endpoints met behulp van standaard HTTP-methoden zoals GET, POST en DELETE.
 
 ### Link naar hosted API
-hier komt de link
+https://apidev-project-service-amadalijns.cloud.okteto.net/tasks
 
 ### Aantoonbare werking
 
