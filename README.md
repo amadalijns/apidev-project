@@ -12,7 +12,7 @@ Met behulp van Pydantic-modellen zorgt de API voor de juiste validatie van gegev
 https://apidev-project-service-amadalijns.cloud.okteto.net/tasks
 
 ### Inloggegevens
-username: arne
+username: arne<br>
 password: zwaardvis
 
 ### Aantoonbare werking
