@@ -11,6 +11,10 @@ Met behulp van Pydantic-modellen zorgt de API voor de juiste validatie van gegev
 ### Link naar hosted API
 https://apidev-project-service-amadalijns.cloud.okteto.net/tasks
 
+### Inloggegevens
+username: arne
+password: zwaardvis
+
 ### Aantoonbare werking
 
 Nieuwe taak aanmaken:<br>
